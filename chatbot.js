@@ -6,9 +6,10 @@ const cmds = [
 	{ title: "manacolors", discription:"display the colors of mana"},
 	{ title: "help", discription:"display this dialog"}
 ]
-const v = '1.0.0';
+/**
+*list of commands to use for the help command
+*/
 	const tmi = require('tmi.js');
-
 // Define configuration options
 const opts = {
   identity: {
@@ -29,6 +30,9 @@ client.on('connected', onConnectedHandler);
 
 // Connect to Twitch:
 client.connect();
+/** 
+* the required things for the twitch chat_bot 
+*/
 
 // Called every time a message comes in
 function onMessageHandler (target, context, msg, self) {
@@ -50,40 +54,38 @@ function onMessageHandler (target, context, msg, self) {
 		client.say(target, `You rolled a ${num}`);
 		console.log(`* Executed ${cmd} command and rolled a ${num}`);
   } 
-  else if( commandName === cd + "mcseed" ) {
-  client.say(target, `the seed for my ssp world is "${seed}"`);
-    console.log(`* Executed  command ${cmd} `);
-  }
-  else if( commandName === cd + "discord"){
-	 client.say(target, "My discord is : https://discord.gg/eUCdFs9")
-    console.log(`* Executed  command ${cmd} `);
-  }
-  else if( commandName === cd + "YT"){
-	 console.log(`* Executed  command ${cmd} `);
-	 client.say(target, "My YT is : https://www.youtube.com/channel/UCKligdusCYH4FZjJ1CGIMKw")
-	  
-  }
-  else if( commandName === cd + "help" ) { 
-	let str = ""
-	for(var x = 0; x<cmds.length;x++){
-		str += cd + cmds[x]["title"] + " : "  + cmds[x]['discription'] + ";";
-	}
-	client.say(target, str);
-	console.log(`* Executed  command ${cmd} `);
-  }
-  else if( commandName === cd + "manacolors" ) {
-	  const colors = ['red','green','blue','black','white']
-	  var str = "in magic the gathering the colors of mana are"; 
-	  for(var x = 0; x< colors.length; x++){
-		  str += colors[x];
-		  str += " ";
+  else {
+	  switch(commandName){
+		case cd + 'mcseed' : {
+			client.say(target,"the see of my ssp world is 'hyrule'"); break;
+		}
+		case cd + 'discord' : {
+			client.say(target, "My discord is : https://discord.gg/eUCdFs9"); break;
+		}
+		case cd + 'YT' : {
+			client.say(target, "My YT is : https://www.youtube.com/channel/UCKligdusCYH4FZjJ1CGIMKw"); break;
+		}
+		case cd + 'manacolors' : {
+			const colors = ['red','green','blue','black','white']
+			var str = "in magic the gathering the colors of mana are"; 
+			for(var x = 0; x< colors.length; x++){
+				str += colors[x];
+				str += " ";
+			}
+			client.say(target,str);
+			break;
+		}
+		case cd + 'manacolors' : {
+			let str = ""
+			for(var x = 0; x<cmds.length;x++){
+				str += cd + cmds[x]["title"] + " : "  + cmds[x]['discription'] + ";";
+			}
+			client.say(target, str);
+			client.say(target,str);
+			break;
+		}
 	  }
-	  client.say(target,str);
   }
-   else if( commandName != undefined) {
-	  console.log(`unkown command used: ` + commandName.split(cd)[1]);
-  }
-  
 }
 
 // Function called when the "dice" command is issued
