@@ -9,7 +9,12 @@ const cmds = [
 /**
 *list of commands to use for the help command
 */
-	const tmi = require('tmi.js');
+const discord =  "https://discord.gg/eUCdFs9";
+const YT = "https://www.youtube.com/channel/UCKligdusCYH4FZjJ1CGIMKw;"
+/**
+* set these to be your own YT and discord links (keep null if you don't have eather a YT or a discord) 
+*/
+const tmi = require('tmi.js');
 // Define configuration options
 const opts = {
   identity: {
@@ -20,6 +25,17 @@ const opts = {
     'skeleton_craft'
   ]
 };
+
+function rollDice (s) {
+  const sides = s;
+  return Math.floor(Math.random() * sides) + 1;
+}
+
+// Called every time the bot connects to Twitch chat
+function onConnectedHandler (addr, port) {
+  console.log(`* Connected to ${addr}:${port}`);
+  console.log(`* chat_bot started on ` + (new Date()).toDateString());
+}
 
 // Create a client with our options
 const client = new tmi.client(opts);
@@ -42,60 +58,59 @@ function onMessageHandler (target, context, msg, self) {
   // Remove whitespace from chat message
   const commandName = msg.trim();
   const cd = "^";
-  const cmd = commandName.split(cd)[1];
-  // If the command is known, let's execute it
-  if (commandName.includes(cd + 'dice')) {
-		var max = 6 
-		if(commandName.split(' ').length > 1){
-			max = parseInt(commandName.split(' ')[1]);
-		}
-		console.log(max);
-		const num = rollDice(max);
-		client.say(target, `You rolled a ${num}`);
-		console.log(`* Executed ${cmd} command and rolled a ${num}`);
-  } 
-  else {
-	  switch(commandName){
-		case cd + 'mcseed' : {
-			client.say(target,"the see of my ssp world is 'hyrule'"); break;
-		}
-		case cd + 'discord' : {
-			client.say(target, "My discord is : https://discord.gg/eUCdFs9"); break;
-		}
-		case cd + 'YT' : {
-			client.say(target, "My YT is : https://www.youtube.com/channel/UCKligdusCYH4FZjJ1CGIMKw"); break;
-		}
-		case cd + 'manacolors' : {
-			const colors = ['red','green','blue','black','white']
-			var str = "in magic the gathering the colors of mana are"; 
-			for(var x = 0; x< colors.length; x++){
-				str += colors[x];
-				str += " ";
+  if( commandName[0] == cd ){
+	  const cmd = commandName.split(cd)[1];
+	  console.log(cmd);
+	  // If the command is known, let's execute it
+	  if (cmd.includes('dice')) {
+			var max = 6 
+			if(commandName.split(' ').length > 1){
+				max = parseInt(commandName.split(' ')[1]);
 			}
-			client.say(target,str);
-			break;
-		}
-		case cd + 'manacolors' : {
-			let str = ""
-			for(var x = 0; x<cmds.length;x++){
-				str += cd + cmds[x]["title"] + " : "  + cmds[x]['discription'] + ";";
+			console.log(max);
+			const num = rollDice(max);
+			client.say(target, `You rolled a ${num}`);
+			console.log(`* Executed ${cmd} command and rolled a ${num}`);
+	  } 
+	  else {
+		  switch(cmd){
+			case  'mcseed' : {
+				client.say(target,"the see of my ssp world is 'hyrule'"); break;
 			}
-			client.say(target, str);
-			client.say(target,str);
-			break;
-		}
+			case  'discord' : {
+				if(discord !== null) {
+					client.say(target, `My discord is : ${discord}`); 
+				}
+				break;
+			}
+			case  'YT' : {
+				if(YT !== null){
+					client.say(target, `My YT is : ${YT}`);
+				}
+				break;
+			}
+			case  'manacolors' : {
+				const colors = ['red','green','blue','black','white']
+				var str = "in magic the gathering the colors of mana are"; 
+				for(var x = 0; x< colors.length; x++){
+					str += colors[x];
+					str += " ";
+				}
+				client.say(target,str);
+				break;
+			}
+			case  'manacolors' : {
+				let str = ""
+				for(var x = 0; x<cmds.length;x++){
+					str +=  cmds[x]["title"] + " : "  + cmds[x]['discription'] + ";";
+				}
+				client.say(target, str);
+				client.say(target,str);
+				break;
+			}
+		  }
 	  }
   }
 }
 
 // Function called when the "dice" command is issued
-function rollDice (s) {
-  const sides = s;
-  return Math.floor(Math.random() * sides) + 1;
-}
-
-// Called every time the bot connects to Twitch chat
-function onConnectedHandler (addr, port) {
-  console.log(`* Connected to ${addr}:${port}`);
-  console.log(`* chat_bot started on ` + (new Date()).toDateString());
-}
