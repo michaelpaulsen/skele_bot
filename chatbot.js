@@ -6,9 +6,10 @@ const cmds = [
 	{ title: "manacolors", discription:"display the colors of mana"},
 	{ title: "help", discription:"display this dialog"}
 ]
-const v = '1.0.0';
+/**
+*list of commands to use for the help command
+*/
 	const tmi = require('tmi.js');
-
 // Define configuration options
 const opts = {
   identity: {
@@ -29,6 +30,9 @@ client.on('connected', onConnectedHandler);
 
 // Connect to Twitch:
 client.connect();
+/** 
+* the required things for the twitch chat_bot 
+*/
 
 // Called every time a message comes in
 function onMessageHandler (target, context, msg, self) {
@@ -83,7 +87,7 @@ function onMessageHandler (target, context, msg, self) {
    else if( commandName != undefined) {
 	  console.log(`unkown command used: ` + commandName.split(cd)[1]);
   }
-  
+  /** possible to change to a switch staitment*/
 }
 
 // Function called when the "dice" command is issued
