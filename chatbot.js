@@ -99,13 +99,13 @@ function onMessageHandler (target, context, msg, self) {
 				client.say(target,str);
 				break;
 			}
-			case  'manacolors' : {
+			case  'help' : {
 				let str = ""
 				for(var x = 0; x<cmds.length;x++){
+					str += cd;
 					str +=  cmds[x]["title"] + " : "  + cmds[x]['discription'] + ";";
 				}
 				client.say(target, str);
-				client.say(target,str);
 				break;
 			}
 		  }
