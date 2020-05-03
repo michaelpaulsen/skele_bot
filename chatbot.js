@@ -19,7 +19,7 @@ const tmi = require('tmi.js');
 const opts = {
   identity: {
     username: 'skeleton_craft',
-    password: 'oauth:sk3um5gtdozw0vzzc91pqib8fk7xrl'
+    password: 'oauth:xxxxxxxxxxxxxxxxxxxxxx'
   },
   channels: [
     'skeleton_craft'
@@ -70,7 +70,6 @@ function onMessageHandler (target, context, msg, self) {
 			console.log(max);
 			const num = rollDice(max);
 			client.say(target, `You rolled a ${num}`);
-			console.log(`* Executed ${cmd} command and rolled a ${num}`);
 	  } 
 	  else {
 		  switch(cmd){
@@ -99,13 +98,13 @@ function onMessageHandler (target, context, msg, self) {
 				client.say(target,str);
 				break;
 			}
-			case  'manacolors' : {
+			case  'help' : {
 				let str = ""
 				for(var x = 0; x<cmds.length;x++){
+					str += cd;
 					str +=  cmds[x]["title"] + " : "  + cmds[x]['discription'] + ";";
 				}
 				client.say(target, str);
-				client.say(target,str);
 				break;
 			}
 		  }
