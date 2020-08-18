@@ -74,7 +74,7 @@ function onMessageHandler (target, context, msg, self) {
 	  else {
 		  switch(cmd){
 			case  'mcseed' : {
-				client.say(target,"the see of my ssp world is 'hyrule'"); break;
+				client.say(target,`the see of my ssp world is ${seed}`); break;
 			}
 			case  'discord' : {
 				if(discord !== null) {
